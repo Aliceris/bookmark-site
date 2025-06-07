@@ -66,6 +66,7 @@
             font-size: 0.9rem;
             transition: all 0.2s;
             border-left: 3px solid transparent;
+            cursor: pointer; /* Added for better UX */
         }
 
         .nav-item:hover, .nav-item.active {
@@ -85,7 +86,8 @@
         .main-content {
             flex: 1;
             padding: 20px;
-            overflow-y: auto;
+            overflow-y: auto; /* Ensures main content can scroll if sidebar is sticky */
+            height: 100vh; /* Added for independent scrolling */
         }
 
         /* 搜索区域 */
@@ -208,12 +210,15 @@
             color: #7f8c8d;
             font-size: 0.8rem;
             line-height: 1.4;
-            margin-left: 30px;
+            margin-left: 30px; /* Aligns with icon+name structure */
         }
 
         /* 子分类 */
         .subcategory {
             margin-bottom: 25px;
+        }
+        .subcategory.hidden { /* Ensure subcategory also hides if needed */
+            display: none !important;
         }
 
         .subcategory-title {
@@ -237,6 +242,10 @@
                 position: static;
                 border-right: none;
                 border-bottom: 1px solid #e8e9ea;
+                overflow-y: visible; /* Allow content to expand */
+            }
+             .main-content {
+                height: auto; /* Allow content to expand */
             }
 
             .nav-menu {
@@ -258,7 +267,7 @@
             }
 
             .websites-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Single column for smaller screens */
             }
         }
 
@@ -277,12 +286,13 @@
                 <p>一站式建站资源</p>
             </div>
             <nav class="nav-menu">
-                <a href="#all" class="nav-item active" data-icon="🏠" onclick="showSection('all')">全部工具</a>
-                <a href="#research" class="nav-item" data-icon="📊" onclick="showSection('research')">需求调研</a>
-                <a href="#setup" class="nav-item" data-icon="🔧" onclick="showSection('setup')">上站工具</a>
-                <a href="#competitor" class="nav-item" data-icon="🎯" onclick="showSection('competitor')">竞品调研</a>
-                <a href="#templates" class="nav-item" data-icon="🎨" onclick="showSection('templates')">站点模板</a>
-                <a href="#news" class="nav-item" data-icon="📰" onclick="showSection('news')">资讯渠道</a>
+                <!-- Changed href to # and using onclick for pure JS navigation -->
+                <a class="nav-item active" data-icon="🏠" onclick="showSection('all')">全部工具</a>
+                <a class="nav-item" data-icon="📊" onclick="showSection('research')">需求调研</a>
+                <a class="nav-item" data-icon="🔧" onclick="showSection('setup')">上站工具</a>
+                <a class="nav-item" data-icon="🎯" onclick="showSection('competitor')">竞品调研</a>
+                <a class="nav-item" data-icon="🎨" onclick="showSection('templates')">站点模板</a>
+                <a class="nav-item" data-icon="📰" onclick="showSection('news')">资讯渠道</a>
             </nav>
         </div>
 
@@ -296,10 +306,10 @@
                 </div>
             </div>
 
-            <!-- 全部工具视图 -->
+            <!-- 全部工具视图 (Master View) -->
             <div id="all-section" class="content-section">
                 <!-- 需求调研 -->
-                <h2 class="category-title" data-icon="📊">需求收集和关键词调研</h2>
+                <h2 class="category-title" data-icon="📊" data-category-id="research">需求收集和关键词调研</h2>
                 <div class="websites-grid">
                     <div class="website-item" data-category="research" data-keywords="google 下拉词 关键词 搜索">
                         <div class="website-header">
@@ -332,7 +342,7 @@
                 </div>
 
                 <!-- 上站工具 -->
-                <h2 class="category-title" data-icon="🔧">上站工具</h2>
+                <h2 class="category-title" data-icon="🔧" data-category-id="setup">上站工具</h2>
                 <div class="subcategory">
                     <h3 class="subcategory-title">🌐 域名查询与注册</h3>
                     <div class="websites-grid">
@@ -373,7 +383,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="subcategory">
                     <h3 class="subcategory-title">☁️ 代码和网站托管</h3>
                     <div class="websites-grid">
@@ -400,7 +409,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="subcategory">
                     <h3 class="subcategory-title">📈 数据分析后台</h3>
                     <div class="websites-grid">
@@ -429,7 +437,7 @@
                 </div>
 
                 <!-- 竞品调研 -->
-                <h2 class="category-title" data-icon="🎯">竞品调研分析</h2>
+                <h2 class="category-title" data-icon="🎯" data-category-id="competitor">竞品调研分析</h2>
                 <div class="websites-grid">
                     <div class="website-item" data-category="competitor" data-keywords="aitdk 流量 关键词">
                         <div class="website-header">
@@ -455,7 +463,7 @@
                 </div>
 
                 <!-- 模板资源 -->
-                <h2 class="category-title" data-icon="🎨">上站模板资源</h2>
+                <h2 class="category-title" data-icon="🎨" data-category-id="templates">上站模板资源</h2>
                 <div class="subcategory">
                     <h3 class="subcategory-title">🔓 开源建站模板</h3>
                     <div class="websites-grid">
@@ -489,7 +497,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="subcategory">
                     <h3 class="subcategory-title">🧭 导航站专用模板</h3>
                     <div class="websites-grid">
@@ -539,6 +546,279 @@
                 </div>
 
                 <!-- 资讯渠道 -->
+                <h2 class="category-title" data-icon="📰" data-category-id="news">资讯渠道</h2>
+                <div class="websites-grid">
+                    <div class="website-item" data-category="news" data-keywords="reddit 社区 资讯">
+                        <div class="website-header">
+                            <div class="website-icon">R</div>
+                            <a href="https://liberating-doll-b8a.notion.site/Reddit-1a8e8aed91b18021839ecba8b74e530b" class="website-name" target="_blank">Reddit 子社区</a>
+                        </div>
+                        <p class="website-desc">精选Reddit社区列表，获取第一手行业资讯</p>
+                    </div>
+                    <div class="website-item" data-category="news" data-keywords="google seo 基础 指南">
+                        <div class="website-header">
+                            <div class="website-icon">G</div>
+                            <a href="https://developers.google.com/search/docs/fundamentals/creating-helpful-content?hl=zh-cn" class="website-name" target="_blank">Google SEO 基础</a>
+                        </div>
+                        <p class="website-desc">Google官方SEO指南，学习搜索引擎优化基础</p>
+                    </div>
+                    <div class="website-item" data-category="news" data-keywords="ahrefs 趋势 网站">
+                        <div class="website-header">
+                            <div class="website-icon">A</div>
+                            <a href="https://ahrefs.com/websites#trending" class="website-name" target="_blank">Ahrefs 趋势网站</a>
+                        </div>
+                        <p class="website-desc">实时跟踪热门趋势网站，发现新兴机会</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 单独分类视图: 需求调研 -->
+            <div id="research-section" class="content-section hidden">
+                <h2 class="category-title" data-icon="📊">需求收集和关键词调研</h2>
+                <div class="websites-grid">
+                    <div class="website-item" data-category="research" data-keywords="google 下拉词 关键词 搜索">
+                        <div class="website-header">
+                            <div class="website-icon">G</div>
+                            <a href="https://www.searchsuggest.tips/?keyword=" class="website-name" target="_blank">Google 下拉词工具</a>
+                        </div>
+                        <p class="website-desc">获取Google搜索下拉提示词，发现用户真实搜索需求</p>
+                    </div>
+                    <div class="website-item" data-category="research" data-keywords="toolify ai工具 榜单 收入">
+                        <div class="website-header">
+                            <div class="website-icon">T</div>
+                            <a href="https://www.toolify.ai/Best-Al-Tools-revenue" class="website-name" target="_blank">Toolify AI工具榜单</a>
+                        </div>
+                        <p class="website-desc">AI工具收入排行榜，了解热门AI工具市场表现</p>
+                    </div>
+                    <div class="website-item" data-category="research" data-keywords="ai工具 需求 市场机会">
+                        <div class="website-header">
+                            <div class="website-icon">A</div>
+                            <a href="https://theresanaiforthat.com/requests" class="website-name" target="_blank">AI工具需求列表</a>
+                        </div>
+                        <p class="website-desc">用户提交的AI工具需求，发现市场空白和机会</p>
+                    </div>
+                    <div class="website-item" data-category="research" data-keywords="ahrefs 关键词 难度 seo">
+                        <div class="website-header">
+                            <div class="website-icon">A</div>
+                            <a href="https://ahrefs.com/keyword-difficulty" class="website-name" target="_blank">Ahrefs 关键词难度</a>
+                        </div>
+                        <p class="website-desc">分析关键词竞争难度，制定SEO策略的重要工具</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 单独分类视图: 上站工具 -->
+            <div id="setup-section" class="content-section hidden">
+                <h2 class="category-title" data-icon="🔧">上站工具</h2>
+                <div class="subcategory">
+                    <h3 class="subcategory-title">🌐 域名查询与注册</h3>
+                    <div class="websites-grid">
+                        <div class="website-item" data-category="setup" data-keywords="域名 查询 搜索">
+                            <div class="website-header">
+                                <div class="website-icon">L</div>
+                                <a href="https://leandomainsearch.com/" class="website-name" target="_blank">Lean Domain Search</a>
+                            </div>
+                            <p class="website-desc">快速查找可用域名，支持多种创意组合建议</p>
+                        </div>
+                        <div class="website-item" data-category="setup" data-keywords="域名 批量 查询">
+                            <div class="website-header">
+                                <div class="website-icon">Q</div>
+                                <a href="https://query.domains/" class="website-name" target="_blank">Query Domains</a>
+                            </div>
+                            <p class="website-desc">批量域名查询工具，支持多种顶级域名</p>
+                        </div>
+                        <div class="website-item" data-category="setup" data-keywords="域名 实时 检查">
+                            <div class="website-header">
+                                <div class="website-icon">I</div>
+                                <a href="https://instantdomainsearch.com/?q=" class="website-name" target="_blank">Instant Domain Search</a>
+                            </div>
+                            <p class="website-desc">实时域名可用性检查，界面简洁响应快速</p>
+                        </div>
+                        <div class="website-item" data-category="setup" data-keywords="域名 注册 spaceship">
+                            <div class="website-header">
+                                <div class="website-icon">S</div>
+                                <a href="https://spaceship.com" class="website-name" target="_blank">Spaceship</a>
+                            </div>
+                            <p class="website-desc">专业域名注册商，价格透明无隐藏费用</p>
+                        </div>
+                        <div class="website-item" data-category="setup" data-keywords="域名 注册 porkbun">
+                            <div class="website-header">
+                                <div class="website-icon">P</div>
+                                <a href="https://porkbun.com" class="website-name" target="_blank">Porkbun</a>
+                            </div>
+                            <p class="website-desc">实惠的域名注册服务，支持多种支付方式</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="subcategory">
+                    <h3 class="subcategory-title">☁️ 代码和网站托管</h3>
+                    <div class="websites-grid">
+                        <div class="website-item" data-category="setup" data-keywords="github 代码 托管">
+                            <div class="website-header">
+                                <div class="website-icon">G</div>
+                                <a href="https://github.com" class="website-name" target="_blank">GitHub</a>
+                            </div>
+                            <p class="website-desc">全球最大代码托管平台，支持静态网站部署</p>
+                        </div>
+                        <div class="website-item" data-category="setup" data-keywords="cloudflare cdn 安全">
+                            <div class="website-header">
+                                <div class="website-icon">C</div>
+                                <a href="https://cloudflare.com" class="website-name" target="_blank">Cloudflare</a>
+                            </div>
+                            <p class="website-desc">CDN和安全服务提供商，免费套餐功能强大</p>
+                        </div>
+                        <div class="website-item" data-category="setup" data-keywords="vercel 部署 前端">
+                            <div class="website-header">
+                                <div class="website-icon">V</div>
+                                <a href="https://vercel.com" class="website-name" target="_blank">Vercel</a>
+                            </div>
+                            <p class="website-desc">现代化前端部署平台，支持多种框架自动部署</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="subcategory">
+                    <h3 class="subcategory-title">📈 数据分析后台</h3>
+                    <div class="websites-grid">
+                        <div class="website-item" data-category="setup" data-keywords="google search console seo">
+                            <div class="website-header">
+                                <div class="website-icon">G</div>
+                                <a href="https://search.google.com/search-console/welcome" class="website-name" target="_blank">Google Search Console</a>
+                            </div>
+                            <p class="website-desc">Google官方SEO工具，监控网站搜索表现</p>
+                        </div>
+                        <div class="website-item" data-category="setup" data-keywords="google analytics 流量 分析">
+                            <div class="website-header">
+                                <div class="website-icon">G</div>
+                                <a href="https://analytics.google.com/analytics/web/provision/#/provision" class="website-name" target="_blank">Google Analytics</a>
+                            </div>
+                            <p class="website-desc">网站流量分析神器，深入了解用户行为</p>
+                        </div>
+                        <div class="website-item" data-category="setup" data-keywords="bing webmaster 必应">
+                            <div class="website-header">
+                                <div class="website-icon">B</div>
+                                <a href="https://www.bing.com/webmasters/about" class="website-name" target="_blank">Bing Webmaster</a>
+                            </div>
+                            <p class="website-desc">必应搜索引擎的网站管理工具</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- 单独分类视图: 竞品调研 -->
+            <div id="competitor-section" class="content-section hidden">
+                <h2 class="category-title" data-icon="🎯">竞品调研分析</h2>
+                <div class="websites-grid">
+                    <div class="website-item" data-category="competitor" data-keywords="aitdk 流量 关键词">
+                        <div class="website-header">
+                            <div class="website-icon">A</div>
+                            <a href="https://aitdk.com" class="website-name" target="_blank">AITDK</a>
+                        </div>
+                        <p class="website-desc">查看网站流量和关键词数据，分析竞争对手表现</p>
+                    </div>
+                    <div class="website-item" data-category="competitor" data-keywords="ahrefs 外链 分析">
+                        <div class="website-header">
+                            <div class="website-icon">A</div>
+                            <a href="https://ahrefs.com/free-seo-tools" class="website-name" target="_blank">Ahrefs 免费SEO工具</a>
+                        </div>
+                        <p class="website-desc">专业的外链分析工具，了解竞品链接建设策略</p>
+                    </div>
+                    <div class="website-item" data-category="competitor" data-keywords="semrush 关键词 竞品">
+                        <div class="website-header">
+                            <div class="website-icon">S</div>
+                            <a href="https://semrush.com" class="website-name" target="_blank">SEMrush</a>
+                        </div>
+                        <p class="website-desc">全面的网站关键词分析平台，竞品研究必备</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 单独分类视图: 站点模板 -->
+            <div id="templates-section" class="content-section hidden">
+                 <h2 class="category-title" data-icon="🎨">上站模板资源</h2>
+                <div class="subcategory">
+                    <h3 class="subcategory-title">🔓 开源建站模板</h3>
+                    <div class="websites-grid">
+                        <div class="website-item" data-category="templates" data-keywords="rin 博客 cloudflare">
+                            <div class="website-header">
+                                <div class="website-icon">R</div>
+                                <a href="https://github.com/openRin/Rin" class="website-name" target="_blank">Rin 博客模板</a>
+                            </div>
+                            <p class="website-desc">基于Cloudflare技术栈的动态博客模板</p>
+                        </div>
+                        <div class="website-item" data-category="templates" data-keywords="nextjs 样板 模板">
+                            <div class="website-header">
+                                <div class="website-icon">N</div>
+                                <a href="https://github.com/ixartz/Next-js-Boilerplate" class="website-name" target="_blank">Next.JS 样板</a>
+                            </div>
+                            <p class="website-desc">支持最新Next.JS 15的完整项目模板</p>
+                        </div>
+                        <div class="website-item" data-category="templates" data-keywords="saas 样板 模板">
+                            <div class="website-header">
+                                <div class="website-icon">S</div>
+                                <a href="https://github.com/ixartz/SaaS-Boilerplate" class="website-name" target="_blank">SaaS 样板模板</a>
+                            </div>
+                            <p class="website-desc">包含现代化UI组件的SaaS项目启动模板</p>
+                        </div>
+                        <div class="website-item" data-category="templates" data-keywords="着陆页 landing page">
+                            <div class="website-header">
+                                <div class="website-icon">L</div>
+                                <a href="https://github.com/ixartz/Next-JS-Landing-Page-Starteer-Template" class="website-name" target="_blank">免费着陆页模板</a>
+                            </div>
+                            <p class="website-desc">专为营销设计的Next.JS着陆页模板</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="subcategory">
+                    <h3 class="subcategory-title">🧭 导航站专用模板</h3>
+                    <div class="websites-grid">
+                        <div class="website-item" data-category="templates" data-keywords="fre123 导航 模板">
+                            <div class="website-header">
+                                <div class="website-icon">F</div>
+                                <a href="https://github.com/fre123-com/fre123-nav/" class="website-name" target="_blank">FRE123 导航模板</a>
+                            </div>
+                            <p class="website-desc">一键搭建免费资源导航网站的完整方案</p>
+                        </div>
+                        <div class="website-item" data-category="templates" data-keywords="开源 项目 画廊">
+                            <div class="website-header">
+                                <div class="website-icon">O</div>
+                                <a href="https://github.com/dubinc/oss-gallery?ref=ossgallery" class="website-name" target="_blank">开源项目画廊</a>
+                            </div>
+                            <p class="website-desc">展示优秀开源项目的精美画廊模板</p>
+                        </div>
+                        <div class="website-item" data-category="templates" data-keywords="webstack 导航 静态">
+                            <div class="website-header">
+                                <div class="website-icon">W</div>
+                                <a href="https://github.com/WebStackPage/WebStackPage.github.io" class="website-name" target="_blank">WebStack 导航</a>
+                            </div>
+                            <p class="website-desc">静态响应式网址导航，仿WebStack.cc设计</p>
+                        </div>
+                        <div class="website-item" data-category="templates" data-keywords="ai工具 导航 tap4">
+                            <div class="website-header">
+                                <div class="website-icon">T</div>
+                                <a href="https://github.com/6677-ai/tap4-ai-webui" class="website-name" target="_blank">AI工具导航</a>
+                            </div>
+                            <p class="website-desc">一键部署属于自己的AI工具导航站</p>
+                        </div>
+                        <div class="website-item" data-category="templates" data-keywords="gpts 应用 商店">
+                            <div class="website-header">
+                                <div class="website-icon">G</div>
+                                <a href="https://github.com/all-in-aigc/gpts-works" class="website-name" target="_blank">GPTs 应用商店</a>
+                            </div>
+                            <p class="website-desc">第三方GPTs应用展示和分享平台</p>
+                        </div>
+                        <div class="website-item" data-category="templates" data-keywords="vercel 模板 中心">
+                            <div class="website-header">
+                                <div class="website-icon">V</div>
+                                <a href="https://vercel.com/templates" class="website-name" target="_blank">Vercel 模板中心</a>
+                            </div>
+                            <p class="website-desc">Vercel官方提供的丰富模板库，即用即部署</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 单独分类视图: 资讯渠道 -->
+            <div id="news-section" class="content-section hidden">
                 <h2 class="category-title" data-icon="📰">资讯渠道</h2>
                 <div class="websites-grid">
                     <div class="website-item" data-category="news" data-keywords="reddit 社区 资讯">
@@ -565,47 +845,136 @@
                 </div>
             </div>
 
-            <!-- 单独分类视图 -->
-            <div id="research-section" class="content-section hidden">
-                <h2 class="category-title" data-icon="📊">需求收集和关键词调研</h2>
-                <div class="websites-grid">
-                    <div class="website-item">
-                        <div class="website-header">
-                            <div class="website-icon">G</div>
-                            <a href="https://www.searchsuggest.tips/?keyword=" class="website-name" target="_blank">Google 下拉词工具</a>
-                        </div>
-                        <p class="website-desc">获取Google搜索下拉提示词，发现用户真实搜索需求</p>
-                    </div>
-                    <div class="website-item">
-                        <div class="website-header">
-                            <div class="website-icon">T</div>
-                            <a href="https://www.toolify.ai/Best-Al-Tools-revenue" class="website-name" target="_blank">Toolify AI工具榜单</a>
-                        </div>
-                        <p class="website-desc">AI工具收入排行榜，了解热门AI工具市场表现</p>
-                    </div>
-                    <div class="website-item">
-                        <div class="website-header">
-                            <div class="website-icon">A</div>
-                            <a href="https://theresanaiforthat.com/requests" class="website-name" target="_blank">AI工具需求列表</a>
-                        </div>
-                        <p class="website-desc">用户提交的AI工具需求，发现市场空白和机会</p>
-                    </div>
-                    <div class="website-item">
-                        <div class="website-header">
-                            <div class="website-icon">A</div>
-                            <a href="https://ahrefs.com/keyword-difficulty" class="website-name" target="_blank">Ahrefs 关键词难度</a>
-                        </div>
-                        <p class="website-desc">分析关键词竞争难度，制定SEO策略的重要工具</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 其他单独分类视图类似... -->
-        </div>
-    </div>
+        </div> <!-- end .main-content -->
+    </div> <!-- end .container -->
 
     <script>
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('all'); // 默认显示全部工具
+        });
+
         // 显示不同分类
-        function showSection(sectionId) {
+        function showSection(sectionIdToShow) {
             // 移除所有导航项的active类
-            document.querySelectorAll('.nav-item').forEach(item =>
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // 隐藏所有内容区域
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.classList.add('hidden');
+            });
+
+            // 激活当前点击的导航项
+            // The selector for nav-item should match based on the sectionIdToShow
+            // Example: if sectionIdToShow is 'research', find nav-item with onclick="showSection('research')"
+            // A more robust way is to use data-attributes on nav items or match based on data-icon or text content if needed.
+            // For now, we assume a convention that links call showSection with the correct ID.
+            const navItems = document.querySelectorAll('.nav-menu .nav-item');
+            navItems.forEach(item => {
+                // A bit of a hacky way to find the right nav item if we don't have a direct ID link
+                // This relies on the onclick attribute string.
+                if (item.getAttribute('onclick') === `showSection('${sectionIdToShow}')`) {
+                    item.classList.add('active');
+                }
+            });
+
+
+            // 显示对应的内容区域
+            const targetSection = document.getElementById(sectionIdToShow + '-section');
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+            } else {
+                console.warn('Section not found:', sectionIdToShow + '-section');
+            }
+            // If searching, ensure all items within the new section are visible (undo previous search filtering)
+            if (targetSection) {
+                 targetSection.querySelectorAll('.website-item, .category-title, .subcategory, .subcategory-title').forEach(el => el.classList.remove('hidden'));
+            }
+             // Clear search input when changing sections
+            document.getElementById('searchInput').value = '';
+        }
+
+        // 搜索网站
+        function searchWebsites() {
+            // 强制切换到 "全部工具" 视图进行搜索
+            showSection('all');
+            // Ensure the 'all' nav item is active, showSection might not pick the correct one if called internally
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelector('.nav-item[onclick="showSection(\'all\')"]').classList.add('active');
+
+
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            const allSection = document.getElementById('all-section'); // Search within #all-section
+            const websiteItems = allSection.querySelectorAll('.website-item');
+
+            if (searchTerm === "") {
+                websiteItems.forEach(item => item.classList.remove('hidden'));
+                allSection.querySelectorAll('.category-title, .subcategory, .subcategory-title').forEach(el => el.classList.remove('hidden'));
+                allSection.classList.remove('hidden'); // Ensure the main section is visible
+                return;
+            }
+
+            let  matchFound = false;
+            websiteItems.forEach(item => {
+                const name = item.querySelector('.website-name').textContent.toLowerCase();
+                const desc = item.querySelector('.website-desc').textContent.toLowerCase();
+                const keywords = item.dataset.keywords ? item.dataset.keywords.toLowerCase() : '';
+                
+                if (name.includes(searchTerm) || desc.includes(searchTerm) || keywords.includes(searchTerm)) {
+                    item.classList.remove('hidden');
+                    matchFound = true;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            // 根据搜索结果调整分类和子分类标题的可见性
+            // 子分类的显隐
+            allSection.querySelectorAll('.subcategory').forEach(subCatDiv => {
+                const hasVisibleItemInSubCat = subCatDiv.querySelector('.website-item:not(.hidden)');
+                if (hasVisibleItemInSubCat) {
+                    subCatDiv.classList.remove('hidden');
+                    // 子分类标题在 subCatDiv 内部，所以 subCatDiv 显示，标题也自然显示
+                } else {
+                    subCatDiv.classList.add('hidden');
+                }
+            });
+
+            // 主分类标题的显隐
+            allSection.querySelectorAll('.category-title').forEach(catTitle => {
+                let currentElement = catTitle.nextElementSibling;
+                let hasVisibleContentBelow = false;
+                while (currentElement && !currentElement.classList.contains('category-title')) {
+                    // 检查是否是直接的 .websites-grid 且包含可见项
+                    if (currentElement.classList.contains('websites-grid') && currentElement.querySelector('.website-item:not(.hidden)')) {
+                        hasVisibleContentBelow = true;
+                        break;
+                    }
+                    // 检查是否是 .subcategory 且它本身是可见的 (未被上面的逻辑隐藏)
+                    if (currentElement.classList.contains('subcategory') && !currentElement.classList.contains('hidden')) {
+                        hasVisibleContentBelow = true;
+                        break;
+                    }
+                    currentElement = currentElement.nextElementSibling;
+                }
+
+                if (hasVisibleContentBelow) {
+                    catTitle.classList.remove('hidden');
+                } else {
+                    catTitle.classList.add('hidden');
+                }
+            });
+            
+            // 如果没有找到任何匹配项，可以考虑显示一个 "无结果" 的提示
+            if (!matchFound && searchTerm) {
+                // console.log("未找到与 '" + searchTerm + "' 相关的结果。");
+                // 你可以在这里向页面添加一个提示元素
+            }
+        }
+    </script>
+    
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "1a6a0eb8da88413c983851da0b3ec6cb"}'></script><!-- End Cloudflare Web Analytics -->
+    
+</body>
+</html>
